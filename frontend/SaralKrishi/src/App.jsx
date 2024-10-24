@@ -10,14 +10,19 @@ import Login from './Components/Login'; // Add this import statement
 import Signup from './Components/Signup'; // Add this import statement
 import Community from './Components/Community'; // Add this import statement
 import Cart from './Components/Cart'; // Add this import statement
+import { Provider } from 'react-redux';
+import appStore from './utils/appStore';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   return (
-    <CartProvider>
+    <Provider store={appStore}>
+      <CartProvider>
       <Router>
+        <Toaster></Toaster>
         <Header />
         <Routes>
-          <Route path="/" element={<Main />} />
+        <Route path="/" element={<Main />} /> 
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/experts" element={<Experts />} />
           <Route path="/login" element={<Login />} />
@@ -28,6 +33,7 @@ const App = () => {
         <Footer />
       </Router>
     </CartProvider>
+    </Provider>
   );
 };
 

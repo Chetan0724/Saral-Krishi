@@ -1,21 +1,42 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { checkValidData } from '../utils/Validate';
+import { googleLogin, signIn } from '../utils/SignUpSignIn';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast'; // Import react-hot-toast
+import { googleLogo } from '../utils/constants';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const user = useSelector((store) => store.user); // Get user from redux store
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Add your login logic here (e.g., API call)
-    if (email === '' || password === '') {
-      setError('Please fill in all fields');
-    } else {
-      // Simulate a successful login
-      console.log('Logging in with:', { email, password });
-      // Redirect or perform further actions after successful login
-    }
+  
+    // Validate email and password
+    const message = checkValidData(emailRef.current.value, passwordRef.current.value);
+    setError(message);
+  
+    // Exit if validation fails
+    if (message) return;
+  
+    // Call signIn with email and password values
+    signIn(emailRef.current.value, passwordRef.current.value, setError);
   };
+
+  const handleGoogleLogin = ()=>{
+    googleLogin(setError);
+}
+
+  // Show popup when user logs in successfully
+  useEffect(() => {
+    if (user && user.email) {
+      toast.success('User logged in successfully!', {
+        duration: 2000, // Show the popup for 2 seconds
+      });
+    }
+  }, [user]); // Run this effect when user changes
 
   return (
     <div className="container mx-auto p-4">
@@ -29,8 +50,7 @@ const Login = () => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            ref={emailRef}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           />
@@ -42,18 +62,25 @@ const Login = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            ref={passwordRef}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           />
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center flex-col">
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Login
+          </button>
+          or 
+          <button
+            onClick={handleGoogleLogin}
+            type="button"
+            className="w-fit border rounded-lg text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
+          >
+            <img src={googleLogo} alt="" className='h-10' />
           </button>
         </div>
       </form>

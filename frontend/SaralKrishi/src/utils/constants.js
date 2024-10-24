@@ -1,0 +1,2 @@
+export const userIcon = "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png";
+export const googleLogo = "https://logos-world.net/wp-content/uploads/2020/09/Google-Logo.png";
