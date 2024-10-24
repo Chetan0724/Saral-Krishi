@@ -1,5 +1,5 @@
 import React from 'react';
-import AryanGupta from '../assets/AryanGupta.jpg';
+import AryanGupta from '../assets/AryanGupta.png';
 import ChetanYadav from '../assets/Chetan.jpg';
 import VikramKumar from '../assets/Vikram.jpg';
 import ParvJoshi from '../assets/Parv.jpg';
