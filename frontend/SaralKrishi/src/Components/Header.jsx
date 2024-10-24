@@ -42,10 +42,7 @@ const Header = () => {
       } else {
         dispatch(removeUser());
         
-        // Redirect to home if logged out and not on login/signup page
-        if (location.pathname !== "/login" && location.pathname !== "/signup") {
-          navigate("/"); // Home page redirect after logout
-        }
+        
       }
     });
 

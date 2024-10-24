@@ -16,7 +16,7 @@ const Signup = () => {
     if (message) return;
 
     // Call signUp function
-    signUp(nameRef, emailRef, passwordRef, setError);
+    await signUp(nameRef, emailRef, passwordRef, setError);
   };
 
   return (
